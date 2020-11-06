@@ -13,7 +13,7 @@ def main():
     for root, dirs, files in os.walk(dir_path):
         for file in files:
             if (file.endswith('.jpg')) and (file not in needed_files):
-                os.remove(file)
+                # os.remove(file)
 
 if __name__ == '__main__':
     main()
