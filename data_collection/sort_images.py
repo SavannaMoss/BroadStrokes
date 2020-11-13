@@ -12,6 +12,7 @@ def main():
     train = np.loadtxt(train_file_names, str, delimiter="/n")
     test = np.loadtxt(test_file_names, str, delimiter="/n")
 
+    """
     src = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/"
     dst_train = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/train_images/"
     dst_test = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/test_images/"
@@ -24,6 +25,7 @@ def main():
 
             if (file.endswith('.jpg')) and (file in test):
                 os.rename(src+file, dst_test+file)
+    """
 
 if __name__ == '__main__':
     main()
