@@ -25,13 +25,13 @@ def main():
     # Load data from relevant files
     print("Loading training data...")
     traindata = np.loadtxt(datafile, str, delimiter=",")
-
+    #print(traindata)
     print("Loading training labels...")
     trainlabels = np.loadtxt(labelfile, str, delimiter=",")
 
     print("Loading testing data...")
     testdata = np.loadtxt(testdatafile, str, delimiter=",")
-
+    #print(testdata)
     print("Loading testing labels...")
     testlabels = np.loadtxt(testlabelfile, str, delimiter=",")
 
@@ -48,17 +48,20 @@ def main():
     encTrain.fit(traindata)
     encTrain = encTrain.transform(traindata).toarray().astype('float32')
 
+
     encTest = OneHotEncoder(handle_unknown='ignore')
-    encTest.fit(testdata)
+    encTest.fit(traindata)
     encTest = encTest.transform(testdata).toarray().astype('float32')
+
+
 
     # create the decision tree
     tree = DecisionTreeClassifier(criterion="entropy", random_state=0)
     tree.fit(encTrain, trainlabels)
     # pdb.set_trace()
-
-    Test the decision tree
-    pred = tree.predict(encTest, False)
+    
+    #Test the decision tree
+    pred = tree.predict(encTest)#, check_input = False)
 
     # # Show the confusion matrix for test data
     # cm = confusion_matrix(testlabels, pred)
@@ -74,7 +77,7 @@ def main():
 
     # Visualize the tree using matplotlib and plot_tree
     fig = plt.figure(figsize=(13,8))
-    fig = plot_tree(tree, feature_names=attributes, class_names=classes], filled=True, rounded=True)
+    fig = plot_tree(tree, feature_names=attributes, class_names= classes, filled=True, rounded=True)
     plt.show()
 
 if __name__ == '__main__':
