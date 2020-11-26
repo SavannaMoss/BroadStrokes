@@ -3,4 +3,4 @@
 
 Developed by Ariyana Miri, Savanna Moss, Hannah Wilberding, and Brock Wilson.
 
-Developed a decision tree classifier and a neural network to predict an artist based on images of artworks and their respective metadata.
+Developed a neural network and a k-nearest-neighbors classifier to predict an artist based on images of artworks and their respective metadata.
