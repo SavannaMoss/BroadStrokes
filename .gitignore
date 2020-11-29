@@ -1,2 +1,3 @@
 # static data
-# data/image_data
+data/image_data/train_images
+data/image_data/test_images
