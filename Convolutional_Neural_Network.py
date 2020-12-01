@@ -89,8 +89,8 @@ def main():
     model.add(Flatten())
 
     # Add dense layers
-    model.add(Dense(units=30, activation='relu', name='hidden1'))
-    model.add(Dense(units=30, activation='relu', name='hidden2'))
+    model.add(Dense(units=30, activation='relu', name='dense1'))
+    model.add(Dense(units=30, activation='relu', name='dense2'))
     model.add(Dense(units=numoutputs, activation='softmax', name='output'))
     model.summary()
 
