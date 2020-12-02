@@ -1,4 +1,7 @@
-# image_conversion.py
+#
+#   image_conversion.py
+#   Converts a folder of .pngs to a single .txt file
+#
 
 import numpy as np
 import os
@@ -54,7 +57,8 @@ def loaddata(mode):
                 print(count)
 
             if count == 3:
-                break
+                return dir_path
+                
 
     f.close()
 

@@ -1,5 +1,6 @@
 # Convolutuonal_Neural_Network.py
-# Predicting the artist of a given image
+# Predicting the artist for a given image
+#       Fall 2020, CSC 3520, Group project
 #
 
 import tensorflow as tf
@@ -14,6 +15,8 @@ import random
 from sklearn import datasets
 from skimage.util import montage
 from sklearn.metrics import confusion_matrix
+from image_conversion import loaddata
+
 
 ROOT = os.path.dirname(os.path.abspath(__file__))  # root directory of this code
 
@@ -26,18 +29,33 @@ def main():
     INSERT CODE HERE
     '''
 
-    xtrain = []
-    ytrain = []
+    # Convert folder of .pngs to .txt file
+    if os.path.exists("train_data.txt") == False:   # Check if our file already exists
+        xtrainpath = loaddata('train')  # Create file
 
-    xtest = []
-    ytest = []
+    # Convert folder of .pngs to .txt file
+    if os.path.exists("test_data.txt") == False:   # Check if our file already exists
+        xtestpath = loaddata('test')  # Create file
+
+    
+    xtrain = np.genfromtxt("train_data.txt", dtype=None, delimiter=",")
+    
+
+    #xtest = np.genfromtxt("test_data.txt", dtype=None, delimiter=",")
+
+    dir_path = os.path.dirname("C:/Users/brock/Documents/BroadStrokes/data/")
+    ytest = np.genfromtxt(dir_path+"/testlabels.txt", dtype=None, delimiter=",")
+    ytrain = np.genfromtxt(dir_path+"/trainlabels.txt", dtype=None, delimiter=",")
+
+    
 
     # Normalize the data
-    xtrain = xtrain.transpose(2, 0, 1)
-    xtrain = xtrain.reshape(xtrain.shape[0], xtrain.shape[1], xtrain.shape[2], 1)
+    #xtrain = xtrain.transpose(2, 0, 1)
+    xtrain = xtrain.reshape(xtrain.shape[0], (xtrain.shape[1])//2, (xtrain.shape[1])//2)
 
-    xtest = xtest.transpose(2, 0, 1)
-    xtest = xtest.reshape(xtest.shape[0], xtest.shape[1], xtest.shape[2], 1)
+    #xtest = xtest.transpose(2, 0, 1)
+    xtest = xtest.reshape(xtest.shape[0], xtest.shape[1], xtest.shape[2])
+    
     
     #show_images(x, x.shape[0])
     #pdb.set_trace()
