@@ -50,15 +50,18 @@ def loaddata(mode):
 
                 # import pdb; pdb.set_trace()
                 np.savetxt(f, img_array, newline=",")
+                f.seek(f.tell() - 2,  os.SEEK_SET)
+                f.truncate()
+
                 f.write("\n")
-                print("printed new line")
+                #print("printed new line")
+            #
+            #     count += 1
+            #     # print(count)
+            #
+            # if count == 3:
+            #     return dir_path
 
-                count += 1
-                print(count)
-
-            if count == 3:
-                return dir_path
-                
 
     f.close()
 
