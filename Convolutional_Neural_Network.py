@@ -31,12 +31,12 @@ def main():
     '''
 
     # Convert folder of .pngs to .txt file
-    if os.path.exists("train_data.txt") == False:   # Check if our file already exists
-        xtrainpath = loaddata('train')  # Create file
+    #if os.path.exists("train_data.txt") == False:   # Check if our file already exists
+    xtrainpath = loaddata('train')  # Create file
 
     # Convert folder of .pngs to .txt file
-    if os.path.exists("test_data.txt") == False:   # Check if our file already exists
-        xtestpath = loaddata('test')  # Create file
+    #if os.path.exists("test_data.txt") == False:   # Check if our file already exists
+    xtestpath = loaddata('test')  # Create file
 
     
     xtrain = np.genfromtxt("train_data.txt", dtype=None, delimiter=",")
@@ -44,13 +44,10 @@ def main():
 
     #xtest = np.genfromtxt("test_data.txt", dtype=None, delimiter=",")
 
-    dir_path = os.path.dirname("C:/Users/brock/Documents/BroadStrokes/data/")
 
     ytest = np.genfromtxt(os.path.realpath("data/trainlabels.txt"), dtype=None, delimiter=",")
     ytrain = np.genfromtxt(os.path.realpath("data/testlabels.txt"), dtype=None, delimiter=",")
 
-
-    pdb.set_trace()
 
     # Normalize the data
     xtrain = xtrain.reshape(xtrain.shape[0], int(math.sqrt(xtrain.shape[1])), int(math.sqrt(xtrain.shape[1])), 1)
