@@ -16,6 +16,7 @@ from sklearn import datasets
 from skimage.util import montage
 from sklearn.metrics import confusion_matrix
 from image_conversion import loaddata
+import math
 
 
 ROOT = os.path.dirname(os.path.abspath(__file__))  # root directory of this code
@@ -44,17 +45,20 @@ def main():
     #xtest = np.genfromtxt("test_data.txt", dtype=None, delimiter=",")
 
     dir_path = os.path.dirname("C:/Users/brock/Documents/BroadStrokes/data/")
-    ytest = np.genfromtxt(dir_path+"/testlabels.txt", dtype=None, delimiter=",")
-    ytrain = np.genfromtxt(dir_path+"/trainlabels.txt", dtype=None, delimiter=",")
 
-    
+    ytest = np.genfromtxt(os.path.realpath("data/trainlabels.txt"), dtype=None, delimiter=",")
+    ytrain = np.genfromtxt(os.path.realpath("data/testlabels.txt"), dtype=None, delimiter=",")
+
+
+    pdb.set_trace()
 
     # Normalize the data
-    #xtrain = xtrain.transpose(2, 0, 1)
-    xtrain = xtrain.reshape(xtrain.shape[0], (xtrain.shape[1])//2, (xtrain.shape[1])//2)
+    xtrain = xtrain.reshape(xtrain.shape[0], int(math.sqrt(xtrain.shape[1])), int(math.sqrt(xtrain.shape[1])), 1)
 
+    
+    
     #xtest = xtest.transpose(2, 0, 1)
-    xtest = xtest.reshape(xtest.shape[0], xtest.shape[1], xtest.shape[2])
+    #xtest = xtest.reshape(xtest.shape[0], xtest.shape[1], xtest.shape[2])
     
     
     #show_images(x, x.shape[0])

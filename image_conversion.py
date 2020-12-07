@@ -14,7 +14,7 @@ def main():
     # Load images and labels
     print("Loading data...")
 
-    # x = loaddata('train')
+    x = loaddata('train')
     print("Train data file created!")
 
     xtest = loaddata('test')
@@ -55,12 +55,12 @@ def loaddata(mode):
 
                 f.write("\n")
                 #print("printed new line")
-            #
-            #     count += 1
-            #     # print(count)
-            #
-            # if count == 3:
-            #     return dir_path
+            
+                count += 1
+                print(count)
+            
+            if count == 3:
+                break
 
 
     f.close()
