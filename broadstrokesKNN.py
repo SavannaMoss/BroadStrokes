@@ -35,7 +35,6 @@ def main():
     print("Precision:")
     print("Confusion Matrix: ")
 
-    print("Graphing...")
 
 
 
