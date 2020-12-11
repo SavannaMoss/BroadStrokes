@@ -1,11 +1,15 @@
-#   image_conversion.py
-#   Creates a .txt file from a folder of .pngs
+# image_conversion.py
+# Creates a .txt file from a folder of .pngs
 
 import numpy as np
 import os
 import tensorflow as tf
 
-DATAPATH = os.path.realpath('data/image_data')
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+DATAPATH = os.path.dirname(dir_path)+'\\data\\image_data\\'
+
+DST = os.path.dirname(dir_path)+'\\data\\'
 
 def main():
     print("Loading data...")
@@ -19,26 +23,30 @@ def main():
 def createFile(mode):
     sz = 224 # new image size / number of total pixels
 
-    # find correct images
+    # find correct images and open relevent file
     if mode == 'train':
-        img_path = DATAPATH+"\\train_resized"
-        f = open("train_data.txt", "a")
+        img_path = DATAPATH+"train_resized"
+        f = open(DST+"train_data.txt", "a")
 
     elif mode == 'test':
-        img_path = DATAPATH+"\\test_resized"
-        f = open("test_data.txt", "a")
+        img_path = DATAPATH+"test_resized"
+        f = open(DST+"test_data.txt", "a")
+        
     else:
         print("Unrecognized mode.")
 
     # obtain file names
     files = [f for f in os.listdir(img_path)]
 
-    # loop through files and convert to array
-    count = 0
-    images = []
+    count = 0 # temp while testing, remove when using on all data
+
+    images = [] # intialize images list
+
+    # loop through file names
     for file in files:
         if (file.endswith('.png')):
 
+            # convert to 2D array of values between 0 and 1 per pixel
             img = tf.keras.preprocessing.image.load_img(
                 img_path+"\\"+file,
                 color_mode="grayscale",
@@ -47,16 +55,21 @@ def createFile(mode):
             img_array = tf.keras.preprocessing.image.img_to_array(img)
             img_array = img_array / 255
 
+            # flatten to 1D array
             img_array = np.array(img_array).flatten()
 
+            # append image to images list
             images.append(img_array)
 
+            # temp while testing, remove when using on all data
             count += 1
             if(count == 20):
-                break # temp while testing, remove when using on all data
+                break
 
-    # converting the list of images to an ndarray
+    # convert the list of images to an ndarray
     images = np.asarray(images)
+
+    # save the array to file
     np.savetxt(f, images, delimiter=',', newline='\n')
 
     # close file
