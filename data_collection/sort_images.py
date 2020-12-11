@@ -1,31 +1,32 @@
+# sort_images.py
+# Utilized to sort images into respective training and testing data subfolders.
+
 import numpy as np
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def main():
-    # import pdb; pdb.set_trace()
 
-    # load text file
-    train_file_names = "train_file_names.txt"
-    test_file_names = "test_file_names.txt"
-    train = np.loadtxt(train_file_names, str, delimiter="/n")
-    test = np.loadtxt(test_file_names, str, delimiter="/n")
+    # load text files
+    train = np.loadtxt("textfiles/train_file_names.txt", str, delimiter="/n")
+    test = np.loadtxt("textfiles/test_file_names.txt", str, delimiter="/n")
 
-    """
-    src = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/"
-    dst_train = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/train_images/"
-    dst_test = "C:/Users/savan/Documents/GitHub/BroadStrokes/data/image_data/test_images/"
+    # establish src and dst
+    src = os.path.realpath(os.path.dirname(dir_path)+"\\data\\image_data")
+    dst_train = os.path.realpath(os.path.dirname(dir_path)+"\\data\\image_data\\train_images")
+    dst_test = os.path.realpath(os.path.dirname(dir_path)+"\\data\\image_data\\test_images")
 
-    # search through folder and compare file name to train and test
-    for root, dirs, files in os.walk(dir_path):
+    search through folder and compare file name to train and test
+    for root, dirs, files in os.walk(src):
         for file in files:
-            if (file.endswith('.jpg')) and (file in train):
-                os.rename(src+file, dst_train+file)
+            # if (file.endswith('.jpg')) and (file in train):
+            #     os.rename(src+"\\"+file, dst_train+"\\"+file)
+            #
+            # if (file.endswith('.jpg')) and (file in test):
+            #     os.rename(src+"\\"+file, dst_test+"\\"+file)
 
-            if (file.endswith('.jpg')) and (file in test):
-                os.rename(src+file, dst_test+file)
-    """
+            pass
 
 if __name__ == '__main__':
     main()
