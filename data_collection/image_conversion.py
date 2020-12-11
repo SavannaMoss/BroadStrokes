@@ -1,5 +1,5 @@
 # image_conversion.py
-# Creates a .txt file from a folder of .pngs
+# Creates a .gz text file from a folder of .pngs
 
 import numpy as np
 import os
@@ -26,12 +26,12 @@ def createFile(mode):
     # find correct images and open relevent file
     if mode == 'train':
         img_path = DATAPATH+"train_resized"
-        f = open(DST+"train_data.txt", "a")
+        f = open(DST+"train_data.gz", "a")
 
     elif mode == 'test':
         img_path = DATAPATH+"test_resized"
-        f = open(DST+"test_data.txt", "a")
-        
+        f = open(DST+"test_data.gz", "a")
+
     else:
         print("Unrecognized mode.")
 
