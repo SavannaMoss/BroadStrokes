@@ -24,9 +24,6 @@ def main():
     Testing Labels: ttest
     '''
 
-    # temporary for testing 20 samples
-    ttrain, ttest = ttrain[:20], ttest[:20]
-
     print("Training KNN model...")
     clf = KNeighborsClassifier(3, weights='distance')
     clf.fit(xtrain, ttrain)

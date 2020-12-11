@@ -38,9 +38,8 @@ def createFile(mode):
     # obtain file names
     files = [f for f in os.listdir(img_path)]
 
-    count = 0 # temp while testing, remove when using on all data
-
-    images = [] # intialize images list
+     # intialize images list
+    images = []
 
     # loop through file names
     for file in files:
@@ -60,11 +59,6 @@ def createFile(mode):
 
             # append image to images list
             images.append(img_array)
-
-            # temp while testing, remove when using on all data
-            count += 1
-            if(count == 20):
-                break
 
     # convert the list of images to an ndarray
     images = np.asarray(images)

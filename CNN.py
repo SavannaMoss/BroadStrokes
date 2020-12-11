@@ -1,5 +1,5 @@
 # CNN.py
-# Implements a convolutuonal neural network to determine an artist based on an artwork.
+# Implements a convolutional neural network to determine an artist based on an artwork.
 
 import numpy as np
 import os
@@ -36,11 +36,11 @@ def main():
     Testing Labels: ttest
     '''
 
-    # temporary for testing 20 samples
-    ttrain, ttest = ttrain[:20], ttest[:20]
-
     # normalize the data
-    # xtrain = xtrain.reshape(xtrain.shape[0], int(math.sqrt(xtrain.shape[1])), int(math.sqrt(xtrain.shape[1])), 1)
+    numsamples = xtrain.shape[0]
+    px = xtrain.shape[1]
+    sz = int(math.sqrt(px))
+    xtrain = xtrain.reshape(numsamples, sz, sz, 1)
 
     # show_images(x, x.shape[0])
     numsamples, xtrainxaxis, xtrainyaxis, _ = xtrain.shape

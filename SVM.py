@@ -18,6 +18,9 @@ def main():
     print("Loading training and testing data...")
     (xtrain, ttrain), (xtest, ttest) = load_data()
 
+    xtrain, ttrain = xtrain[:20], ttrain[:20]
+    xtest, ttest = xtest[:20], ttest[:20]
+
     '''
     Training Data: xtrain
     Training Labels: ttrain
@@ -25,12 +28,9 @@ def main():
     Testing Labels: ttest
     '''
 
-    # temporary for testing 20 samples
-    ttrain, ttest = ttrain[:20], ttest[:20]
-
-    # print("Extracting HOG Features...")
-    # x = getHOG(xtrain)
-    # xt = getHOG(xtest)
+    print("Extracting HOG Features...")
+    x = getHOG(xtrain)
+    xt = getHOG(xtest)
 
     print("Setting up labels...")
     # converts categorical class labels to unique values 0-9
@@ -39,20 +39,22 @@ def main():
 
     print("Training SVM...")
     clf = svm.SVC(C = 0.1)
-    clf.fit(xtrain, ttrain)
-    # clf.fit(x, xt) # for use with HOG features
+    # clf.fit(xtrain, ttrain)
+    clf.fit(x, xt) # for use with HOG features
+
+    import pdb; pdb.set_trace()
 
     print("Testing Accuracy: ", clf.score(xtest, ttest))
     print("Precision: ")
     print("Confusion Matrix: ")
 
-# def getHOG(data):
-#     x = []
-#     for d in data:
-#         # cells_per_block = (5,5)
-#         x.append(hog(d, orientations = 8, pixels_per_cell = (100,100), cells_per_block = np.zeros((224, 224)), transform_sqrt = True))
-#
-#     return np.asarray(x)
+def getHOG(data):
+    x = []
+    for d in data:
+        x.append(hog(d, orientations = 8, pixels_per_cell = (16, 16),
+                    cells_per_block = (1, 1), transform_sqrt = True))
+
+    return np.asarray(x)
 
 if __name__ == '__main__':
     main()
