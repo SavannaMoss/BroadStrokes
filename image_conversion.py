@@ -1,25 +1,22 @@
-#
 #   image_conversion.py
-#   Converts a folder of .pngs to a single .txt file
-#
+#   Creates a .txt file from a folder of .pngs
 
 import numpy as np
 import os
 import tensorflow as tf
-tf.random.set_seed(3520)
 
 DATAPATH = os.path.realpath('data/image_data')
 
 def main():
     print("Loading data...")
 
-    x = loaddata('train')
+    x = createFile('train')
     print("Train data file created!")
 
-    xtest = loaddata('test')
+    xtest = createFile('test')
     print("Test data file created!")
 
-def loaddata(mode):
+def createFile(mode):
     sz = 224 # new image size / number of total pixels
 
     # find correct images
@@ -58,7 +55,7 @@ def loaddata(mode):
             if(count == 20):
                 break # temp while testing, remove when using on all data
 
-    #converting list of images to an nd.array
+    # converting the list of images to an ndarray
     images = np.asarray(images)
     np.savetxt(f, images, delimiter=',', newline='\n')
 
