@@ -55,7 +55,7 @@ def loaddata(mode):
             images.append(img_array)
 
             count += 1
-            if(count == 2):
+            if(count == 20):
                 break # temp while testing, remove when using on all data
 
     #converting list of images to an nd.array
