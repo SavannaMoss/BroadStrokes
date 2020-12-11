@@ -3,4 +3,4 @@
 
 Developed by Ariyana Miri, Savanna Moss, Hannah Wilberding, and Brock Wilson.
 
-Developed a neural network and a k-nearest-neighbors classifier to predict an artist based on images of artworks and their respective metadata.
+Developed a convolutional neural network, k-nearest-neighbors classifier, and a support vector machine to predict an artist based on images of artworks.
