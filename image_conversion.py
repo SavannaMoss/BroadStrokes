@@ -38,6 +38,7 @@ def loaddata(mode):
 
     # loop through files and convert to array
     count = 0
+    images = []
     for file in files:
         if (file.endswith('.png')):
 
@@ -51,30 +52,15 @@ def loaddata(mode):
 
             img_array = np.array(img_array).flatten()
 
-            # write image array to file
-            np.savetxt(f, img_array, newline=",")
+            images.append(img_array)
 
-            f.write("\n")
+            count += 1
+            if(count == 2):
+                break # temp while testing, remove when using on all data
 
-            break # temp while testing, remove when using on all data
-
-    # close file
-    f.close()
-
-    # remove last comma at the end of the file
-    if mode == 'train':
-        with open("train_data.txt", 'rb+') as f:
-            f.seek(0, os.SEEK_END)
-            f.seek(f.tell() - 3, os.SEEK_SET)
-            f.truncate()
-
-    elif mode == 'test':
-        with open("test_data.txt", 'rb+') as f:
-            f.seek(0, os.SEEK_END)
-            f.seek(f.tell() - 3, os.SEEK_SET)
-            f.truncate()
-    else:
-        print("Unrecognized mode.")
+    #converting list of images to an nd.array
+    images = np.asarray(images)
+    np.savetxt(f, images, delimiter=',', newline='\n')
 
     # close file
     f.close()
