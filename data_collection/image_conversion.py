@@ -22,15 +22,15 @@ def main():
 
 def createFile(mode):
     sz = 224 # new image size / number of total pixels
-
+    count = 0
     # find correct images and open relevent file
     if mode == 'train':
         img_path = DATAPATH+"train_resized"
-        f = open(DST+"train_data.gz", "a")
+        f = open(DST+"train_data.gz", "w")
 
     elif mode == 'test':
         img_path = DATAPATH+"test_resized"
-        f = open(DST+"test_data.gz", "a")
+        f = open(DST+"test_data.gz", "w")
 
     else:
         print("Unrecognized mode.")
@@ -59,6 +59,9 @@ def createFile(mode):
 
             # append image to images list
             images.append(img_array)
+            count += 1;
+            if (count == 50):
+                break
 
     # convert the list of images to an ndarray
     images = np.asarray(images)
