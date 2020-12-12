@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 # sci-kit imports
 from sklearn.neighbors import KNeighborsClassifier
 from skimage.util import montage
+from sklearn.metrics import precision_score, confusion_matrix
 
 # custom library
 from load_data import load_data
@@ -25,13 +26,15 @@ def main():
     '''
 
     print("Training KNN model...")
-    clf = KNeighborsClassifier(3, weights='distance')
+    clf = KNeighborsClassifier(26, weights='distance')
     clf.fit(xtrain, ttrain)
 
     # compute performance metrics
-    print("Testing Accuracy: ", clf.score(xtest, ttest))
-    print("Precision: ")
-    print("Confusion Matrix: ")
+    print("Testing Accuracy:", clf.score(xtest, ttest))
+
+    # pred = clf.predict(xtest)
+    # print("Precision:", precision_score(ttest, pred, average='micro'))
+    # print("Confusion Matrix:\n", confusion_matrix(ttest, pred))
 
 if __name__ == '__main__':
     main()

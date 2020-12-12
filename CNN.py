@@ -109,15 +109,17 @@ def main():
                         validation_data=(xtest, ttest))
 
     # compute performance metrics
-    metrics = model.evaluate(xtrain, t, verbose=0) # training accuracy
-
-    # metrics = model.evaluate(xtest, ttest, verbose=0) # testing accuracy
     print("=================================")
-    print(f"loss = {metrics[0]:0.4f}")
-    print(f"accuracy = {metrics[1]:0.4f}")
+    train_metrics = model.evaluate(xtrain, t, verbose=0) # training accuracy
+    print(f"Training Loss = {train_metrics[0]:0.4f}")
+    print(f"Training Accuracy = {train_metrics[1]:0.4f}")
 
-    print("Precision: ")
-    print("Confusion Matrix: ")
+    test_metrics = model.evaluate(xtest, ttest, verbose=0) # testing accuracy
+    print(f"Testing Loss = {test_metrics[0]:0.4f}")
+    print(f"Testing Accuracy = {test_metrics[1]:0.4f}")
+
+    print("Precision:")
+    print("Confusion Matrix:\n")
 
     print("Displaying plot...")
     plt.plot(history.history['accuracy'])
