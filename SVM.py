@@ -38,19 +38,21 @@ def main():
     _, tt = np.unique(ttest, return_inverse=True)
 
     print("Training SVM...")
-    clf = svm.SVC(C = 1.0)
+    np.random.seed(0)
+    clf = svm.SVC(C=1.0, kernel='linear')
     clf.fit(x, t)
 
+    # performance metrics
     print("Testing Accuracy:", clf.score(xt, tt))
 
-    pred = clf.predict(xt)
-    print("Precision:", precision_score(tt, pred, average='micro'))
-    print("Confusion Matrix:\n", confusion_matrix(tt, pred))
+    # pred = clf.predict(xt)
+    # print("Precision:", precision_score(tt, pred, average='weighted'))
+    # print("Confusion Matrix:\n", confusion_matrix(tt, pred))
 
 def getHOG(data):
     x = []
     for d in data:
-        x.append(hog(d, orientations = 8, pixels_per_cell = (16, 16),
+        x.append(hog(d, orientations = 45, pixels_per_cell = (16, 16),
                     cells_per_block = (14, 14), transform_sqrt = True))
 
     return np.asarray(x)
