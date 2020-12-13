@@ -5,5 +5,8 @@ data/image_data/test_images
 data/image_data/train_resized
 data/image_data/test_resized
 
+# compressed / large data
+*.gz
+
 # compiled files
 *.pyc
