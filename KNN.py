@@ -4,6 +4,7 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # sci-kit imports
 from sklearn.neighbors import KNeighborsClassifier, NeighborhoodComponentsAnalysis
@@ -55,8 +56,8 @@ def main():
     # performance metrics
     print("\nComputing performance metrics...: ")
     print("Training Accuracy:", clf.score(pca_train, ttrain))
-    print("Testing Accuracy:", clf.score(pred_test, ttest)) # np.mean(pred_test == ttest)
-    print("Precision:", precision_score(ttest, pred_test, average='macro'))
+    print("Testing Accuracy:", clf.score(pca_test, ttest))
+    print("Precision:", precision_score(ttest, pred_test, average='micro'))
 
     # count mislabelled data (training yields 100% accuracy so not needed)
     mislabelled_test = np.where(pred_test != ttest)
@@ -67,11 +68,14 @@ def main():
 
     # plot out dataset with the true labels to see overlaps
     print("\nCreating scatter plot...")
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(8, 6), subplot_kw=dict(projection='3d'))
     plt.subplots_adjust(bottom=0.1, top=0.9, right=0.7, left=0.1)
 
     ax.set_title("KNN Scatter Plot")
-    scatter = ax.scatter(pca_test[:,0], pca_test[:,1], c=num, cmap='tab10')
+    scatter = ax.scatter(pca_test[:,0], pca_test[:,1], pca_test[:,2], c=num, cmap='tab10')
+    ax.set_xlabel('Component 1')
+    ax.set_ylabel('Component 2')
+    ax.set_zlabel('Component 3')
 
     handles, _ = scatter.legend_elements()
     legend = ax.legend(handles, labels,

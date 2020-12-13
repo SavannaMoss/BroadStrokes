@@ -56,7 +56,7 @@ def main():
     print("\nComputing performance metrics...")
     print("Training Accuracy: ", clf.score(x, t))
     print("Testing Accuracy:", clf.score(xt, tt))
-    print("Precision:", precision_score(tt, clf.predict(xt), labels=tt, average='macro'))
+    print("Precision:", precision_score(tt, clf.predict(xt), average='micro'))
 
     mislabeled_train = np.where(clf.predict(x) != t)
     mislabelled_test = np.where(clf.predict(xt) != tt)
