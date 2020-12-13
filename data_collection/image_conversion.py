@@ -59,9 +59,6 @@ def createFile(mode):
 
             # append image to images list
             images.append(img_array)
-            count += 1;
-            if (count == 50):
-                break
 
     # convert the list of images to an ndarray
     images = np.asarray(images)
