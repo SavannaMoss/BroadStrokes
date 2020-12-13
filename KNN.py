@@ -8,11 +8,7 @@ import matplotlib.pyplot as plt
 # sci-kit imports
 from sklearn.neighbors import KNeighborsClassifier, NeighborhoodComponentsAnalysis
 from skimage.util import montage
-from sklearn.metrics import precision_score, confusion_matrix, ConfusionMatrixDisplay
-
-#PCA for dimention reduction
-from sklearn.decomposition import PCA
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.metrics import precision_score, plot_confusion_matrix
 
 # custom library
 from load_data import load_data
@@ -28,40 +24,47 @@ def main():
     Testing Data: xtest
     Testing Labels: ttest
     '''
-    dim_reduction = NeighborhoodComponentsAnalysis(n_components = 80, init = 'pca', random_state = 0) #it will choose beseet one pca, lda,identity, random, nparray
+
+    # dimension reduction for generality
+    dim_reduction = NeighborhoodComponentsAnalysis(n_components=80, init='pca', random_state=0)
+    dim_reduction.fit(xtrain, ttrain)
 
     print("Training KNN model...")
     clf = KNeighborsClassifier(n_neighbors, weights='distance')
-    #clf.fit(xtrain, ttrain)
-
-
-    dim_reduction.fit(xtrain, ttrain)
     clf.fit(dim_reduction.transform(xtrain), ttrain)
-    # print("Training Accuracy", name, ": ", clf.score(model.trainsform(xtrain), ttrain))
-    print("Testing Accuracy: ", clf.score(dim_reduction.transform(xtest), ttest))
 
-
-    #imaging
+    # show model
     transformed = dim_reduction.transform(xtest)
     labels, num = np.unique(ttest, return_inverse = True)
-    fig, ax = plt.subplots()
-    # legend1 =  ax.legend((labels[0], labels[1], labels[2],labels[3],labels[4],labels[5],labels[6],labels[7],labels[8],labels[9]),  loc = "upper right", title = "Artists")
-    legend1 = ax.legend(labels.legend_elements(num = 10), loc = "upper right", title = "Artists")
-    ax.add_artist(legend1)
-    ax.scatter(transformed[:,0], transformed[:,1], c = num, cmap = 'tab10')
 
-    # ax.legend((labels[0], labels[1], labels[1],labels[1],labels[1],labels[1],labels[1],labels[1],labels[1],labels[1],labels[1],))
+    fig, ax = plt.subplots()
+    ax.set_title("KNN Scatter Plot")
+    scatter = ax.scatter(transformed[:,0], transformed[:,1], c=num, cmap='tab10')
+    handles, _ = scatter.legend_elements()
+    legend = ax.legend(handles, labels,
+                        title='Artists', fontsize='small', bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    ax.add_artist(legend)
+
     plt.show()
 
+    # performance metrics
+    print("Testing Accuracy:", clf.score(transformed, ttest))
 
-    # compute performance metrics
-    # print("Training Accuracy:", clf.score(xtrain, ttrain))
-    # print("Testing Accuracy:", clf.score(xtest, ttest))
+    print("Precision:", precision_score(ttest, clf.predict(transformed), average='micro'))
 
+    plt.rc('font', size=6)
+    plt.rc('figure', titlesize=10)
 
-    # pred = clf.predict(xtest)
-    # print("Precision:", precision_score(ttest, pred, average='micro'))
-    # print("Confusion Matrix:\n", confusion_matrix(ttest, pred))
+    fig, ax = plt.subplots(figsize=(8, 6))
+    plt.subplots_adjust(bottom=0.2, top=0.9, right=0.9, left=0.1)
+    ax.set_title("KNN Confusion Matrix")
+    cm = plot_confusion_matrix(clf, transformed, ttest,
+                                normalize='all',
+                                display_labels=np.unique(ttest),
+                                xticks_rotation='vertical',
+                                cmap=plt.cm.Blues,
+                                ax=ax)
+    plt.show()
 
 if __name__ == '__main__':
     main()
