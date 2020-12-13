@@ -108,18 +108,18 @@ def main():
                         verbose=0,
                         validation_data=(xtest, ttest))
 
+    # save model to file
+    model.save(os.path.expanduser(os.path.join(ROOT, 'digits_model.h5')))
+
     # compute performance metrics
     print("=================================")
     train_metrics = model.evaluate(xtrain, t, verbose=0) # training accuracy
-    print(f"Training Loss = {train_metrics[0]:0.4f}")
-    print(f"Training Accuracy = {train_metrics[1]:0.4f}")
+    print(f"Training Loss: {train_metrics[0]:0.4f}")
+    print(f"Training Accuracy: {train_metrics[1]:0.4f}")
 
     test_metrics = model.evaluate(xtest, ttest, verbose=0) # testing accuracy
-    print(f"Testing Loss = {test_metrics[0]:0.4f}")
-    print(f"Testing Accuracy = {test_metrics[1]:0.4f}")
-
-    print("Precision:")
-    print("Confusion Matrix:\n")
+    print(f"Testing Loss: {test_metrics[0]:0.4f}")
+    print(f"Testing Accuracy: {test_metrics[1]:0.4f}")
 
     print("Displaying plot...")
     plt.plot(history.history['accuracy'])
@@ -129,8 +129,21 @@ def main():
     plt.xlabel('epoch')
     plt.show()
 
-    # save model to file
-    model.save(os.path.expanduser(os.path.join(ROOT, 'digits_model.h5')))
+    print("\nCreating confusion matrix... ")
+    plt.rc('font', size=6)
+    plt.rc('figure', titlesize=10)
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    plt.subplots_adjust(bottom=0.2, top=0.9, right=0.9, left=0.1)
+
+    ax.set_title("CNN Confusion Matrix")
+    cm = plot_confusion_matrix(model, xtest, ttest,
+                                normalize='all',
+                                display_labels=labels,
+                                xticks_rotation='vertical',
+                                cmap=plt.cm.Blues,
+                                ax=ax)
+    plt.show()
 
 def set_random_seed(seed):
     '''Set random seed for repeatability.'''
