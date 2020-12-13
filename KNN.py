@@ -31,7 +31,7 @@ def main():
     Transformed data via pca: pca_(train/test)
 
     Predicted Labels: pred_test
-    Misclassified Test LabeLs: mislabelled_test
+    Misclassified Test LabeLs: mislabeled_test
     '''
 
     # dimension reduction using principal component analysis (PCA)
@@ -57,13 +57,12 @@ def main():
     print("\nComputing performance metrics...: ")
     print("Training Accuracy:", clf.score(pca_train, ttrain))
     print("Testing Accuracy:", clf.score(pca_test, ttest))
-    print("Precision:", precision_score(ttest, pred_test, average='micro'))
 
-    # count mislabelled data (training yields 100% accuracy so not needed)
-    mislabelled_test = np.where(pred_test != ttest)
-    print("Number of Incorrectly Predicted:", (xtest[mislabelled_test].shape[0]), "/" ,
+    # count mislabeled data (training yields 100% accuracy so not needed)
+    mislabeled_test = np.where(pred_test != ttest)
+    print("Number of Incorrectly Predicted:", (xtest[mislabeled_test].shape[0]), "/" ,
                                                 (xtrain.shape[0] + xtest.shape[0]), "images")
-    print("Number of Correctly Predicted:", (xtrain.shape[0] + (xtest.shape[0] - xtest[mislabelled_test].shape[0])), "/" ,
+    print("Number of Correctly Predicted:", (xtrain.shape[0] + (xtest.shape[0] - xtest[mislabeled_test].shape[0])), "/" ,
                                                 (xtrain.shape[0] + xtest.shape[0]), "images")
 
     # plot out dataset with the true labels to see overlaps
