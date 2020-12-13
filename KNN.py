@@ -19,27 +19,59 @@ def main():
     (xtrain, ttrain), (xtest, ttest) = load_data()
 
     '''
+    VARIABLE NAME KEY:
+
     Training Data: xtrain
     Training Labels: ttrain
     Testing Data: xtest
     Testing Labels: ttest
+
+    Dimension Reductionn: pca
+    Transformed data via pca: pca_(train/test)
+
+    Predicted Labels: pred_test
+    Misclassified Test LabeLs: mislabelled_test
     '''
 
-    # dimension reduction for generality
-    dim_reduction = NeighborhoodComponentsAnalysis(n_components=80, init='pca', random_state=0)
-    dim_reduction.fit(xtrain, ttrain)
+    # dimension reduction using principal component analysis (PCA)
+    pca = NeighborhoodComponentsAnalysis(n_components=80, init='pca', random_state=0)
+    pca.fit(xtrain, ttrain)
 
-    print("Training KNN model...")
-    clf = KNeighborsClassifier(n_neighbors, weights='distance')
-    clf.fit(dim_reduction.transform(xtrain), ttrain)
 
-    # show model
-    transformed = dim_reduction.transform(xtest)
+    #transform training and testing data
+    pca_train = pca.transform(xtrain)
+    pca_test = pca.transform(xtest)
+
+    #grab unique labels and the number of
     labels, num = np.unique(ttest, return_inverse = True)
 
+
+    #training KNN to pca transformed data
+    print("Training KNN model...")
+    clf = KNeighborsClassifier(n_neighbors, weights='distance')
+    clf.fit(pca_train, ttrain)
+
+    #grab predicted labels for testing
+    #training yields 100% accuracy so not needed
+    pred_test = clf.predict(pca_test)
+
+
+    # performance metrics
+    print("\nStatistics: ")
+    print("Training Accuracy: ", clf.score(pca_train, ttrain))
+    print("Testing Accuracy:", np.mean(pred_test == ttest))
+    print("Precision:", precision_score(ttest, pred_test, labels = labels, average='micro'))
+
+    #count mislabelled data (training got 100% accuracy so no need for training)
+    mislabelled_test = np.where(pred_test != ttest)
+    print("Number of Incorrectly Predicted: ", (xtest[mislabelled_test].shape[0]), " / " , (xtrain.shape[0] + xtest.shape[0]), " images")
+    print("Number of Correctly Predicted: ", (xtrain.shape[0] + (xtest.shape[0] - xtest[mislabelled_test].shape[0])), " / " , (xtrain.shape[0] + xtest.shape[0]), " images")
+
+    #plot out dataset with the true labels to see overlaps
+    print("\nCreating Scatter Plot...")
     fig, ax = plt.subplots()
     ax.set_title("KNN Scatter Plot")
-    scatter = ax.scatter(transformed[:,0], transformed[:,1], c=num, cmap='tab10')
+    scatter = ax.scatter(pca_test[:,0], pca_test[:,1], c=num, cmap='tab10')
     handles, _ = scatter.legend_elements()
     legend = ax.legend(handles, labels,
                         title='Artists', fontsize='small', bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
@@ -47,24 +79,25 @@ def main():
 
     plt.show()
 
-    # performance metrics
-    print("Testing Accuracy:", clf.score(transformed, ttest))
-
-    print("Precision:", precision_score(ttest, clf.predict(transformed), average='micro'))
-
+    #create confusion matrix
+    print("Creating Confusion Matrix...")
     plt.rc('font', size=6)
     plt.rc('figure', titlesize=10)
 
     fig, ax = plt.subplots(figsize=(8, 6))
     plt.subplots_adjust(bottom=0.2, top=0.9, right=0.9, left=0.1)
     ax.set_title("KNN Confusion Matrix")
-    cm = plot_confusion_matrix(clf, transformed, ttest,
+    cm = plot_confusion_matrix(clf, pca_test, ttest,
                                 normalize='all',
                                 display_labels=np.unique(ttest),
                                 xticks_rotation='vertical',
                                 cmap=plt.cm.Blues,
                                 ax=ax)
     plt.show()
+
+
+
+
 
 if __name__ == '__main__':
     main()
