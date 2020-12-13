@@ -60,10 +60,10 @@ def main():
 
     mislabeled_train = np.where(clf.predict(x) != t)
     mislabelled_test = np.where(clf.predict(xt) != tt)
-    print("Number of Incorrectly Predicted: ", (xtrain[mislabeled_train].shape[0] + xtest[mislabelled_test].shape[0]), " / " ,
-                                                (xtrain.shape[0] + xtest.shape[0]), " images")
-    print("Number of Correctly Predicted: ", ((xtrain.shape[0] - xtrain[mislabeled_train].shape[0]) + (xtest.shape[0] - xtest[mislabelled_test].shape[0])), " / " ,
-                                                (xtrain.shape[0] + xtest.shape[0]), " images")
+    print("Number of Incorrectly Predicted:", (xtrain[mislabeled_train].shape[0] + xtest[mislabelled_test].shape[0]), "/" ,
+                                                (xtrain.shape[0] + xtest.shape[0]), "images")
+    print("Number of Correctly Predicted:", ((xtrain.shape[0] - xtrain[mislabeled_train].shape[0]) + (xtest.shape[0] - xtest[mislabelled_test].shape[0])), " / " ,
+                                                (xtrain.shape[0] + xtest.shape[0]), "images")
 
     print("\nCreating confusion matrix... ")
     plt.rc('font', size=6)

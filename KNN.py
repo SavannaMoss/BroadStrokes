@@ -81,7 +81,7 @@ def main():
     legend = ax.legend(handles, labels,
                         title='Artists',
                         fontsize='small',
-                        bbox_to_anchor=(1.05, 1),
+                        bbox_to_anchor=(1.10, 1),
                         loc='upper left',
                         borderaxespad=0)
     ax.add_artist(legend)
