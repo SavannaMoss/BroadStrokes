@@ -54,7 +54,7 @@ def main():
     pred_test = clf.predict(pca_test)
 
     # performance metrics
-    print("\nComputing performance metrics...: ")
+    print("\nComputing performance metrics...")
     print("Training Accuracy:", clf.score(pca_train, ttrain))
     print("Testing Accuracy:", clf.score(pca_test, ttest))
 
