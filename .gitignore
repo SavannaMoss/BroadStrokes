@@ -7,3 +7,6 @@ data/image_data/test_resized
 
 # compiled files
 *.pyc
+
+# large
+*.h5
