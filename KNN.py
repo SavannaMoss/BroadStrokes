@@ -60,6 +60,7 @@ def main():
 
     # count mislabeled data (training yields 100% accuracy so not needed)
     mislabeled_test = np.where(pred_test != ttest)
+    import pdb; pdb.set_trace()
     print("Number of Incorrectly Predicted:", (xtest[mislabeled_test].shape[0]), "/" ,
                                                 (xtrain.shape[0] + xtest.shape[0]), "images")
     print("Number of Correctly Predicted:", (xtrain.shape[0] + (xtest.shape[0] - xtest[mislabeled_test].shape[0])), "/" ,
@@ -101,6 +102,18 @@ def main():
                                 cmap=plt.cm.Blues,
                                 ax=ax)
     plt.show()
+
+    #plot kneights to image classified correctly and image not classified Correctly
+    #grab 3 nearest neighbors from the testing
+    # mislabeled = xtest[]
+    # ind = clf.kneighbors(xtest[mislabeled], n_neighbors=3, return_distance=False)
+    # ind2 = clf.kneighbors(xtest[correctly_labeled], n_neighbors=3, return_distance=False)
+    # plt.imshow(montage(np.concatenate((xtest[mislabeled[0]], xtrain[ind[0]]))))
+    # plt.show()
+    #
+    # correctly_labeled = xtest[]
+    # plt.imshow(montage(np.concatenate((xtest[correctly_labeled[0]], xtrain[ind2[0]]))))
+    # plt.show()
 
 if __name__ == '__main__':
     main()
