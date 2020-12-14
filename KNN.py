@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # sci-kit imports
 from sklearn.neighbors import KNeighborsClassifier, NeighborhoodComponentsAnalysis
 from skimage.util import montage
-from sklearn.metrics import precision_score, plot_confusion_matrix
+from sklearn.metrics import plot_confusion_matrix
 
 # custom library
 from load_data import load_data

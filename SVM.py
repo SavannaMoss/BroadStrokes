@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn import svm
 from skimage.feature import hog
 from skimage.util import montage
-from sklearn.metrics import precision_score, plot_confusion_matrix
+from sklearn.metrics import plot_confusion_matrix
 
 # custom library
 from load_data import load_data
