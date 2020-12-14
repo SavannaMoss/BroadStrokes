@@ -22,7 +22,7 @@ def main():
 
 def createFile(mode):
     sz = 224 # new image size / number of total pixels
-    count = 0
+
     # find correct images and open relevent file
     if mode == 'train':
         img_path = DATAPATH+"train_resized"

@@ -17,4 +17,4 @@ Run *image_conversion.py* to generate the *train_data.gz* and *train_data.gz* co
 - Displays training accuracy, testing accuracy, number of mislabeled and correctly labeled images, and a confusion matrix graph.
 
 *CNN.py* is the convolutional neural network.
-- Displays training loss and accuracy, testing loss and accuracy, number of mislabeled and correctly labeled images, and a confusion matrix graph.
+- Displays training loss and accuracy, testing loss and accuracy, and a line graph of the training and testing accuracy over time.
