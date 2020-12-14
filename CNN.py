@@ -6,7 +6,6 @@ import os
 import math
 import random
 import matplotlib.pyplot as plt
-import pdb
 
 # tensorflow imports
 import tensorflow as tf
